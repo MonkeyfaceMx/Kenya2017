@@ -130,6 +130,7 @@ int main(){
     
     cout << endl << "Hello, Rachel & Pablo!" << endl << endl ;								// Check if model is running
    
+    cout << "Hi laptop -welcome to git" << endl;
     //// --- Load parameters --- ////
     cout << "Section 1 - We are loading the arrays" << endl;
     
@@ -224,7 +225,7 @@ int main(){
     
     //// --- Output the results in a csv file --- ////
     FILE* ProjectZim;
-    ProjectZim = fopen("/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Test11.csv","w");    // Change name and file location here as applicable
+    ProjectZim = fopen("/Users/Monkeyface/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Test11.csv","w");    // Change name and file location here as applicable
     
     
     
