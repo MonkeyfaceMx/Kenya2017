@@ -224,7 +224,7 @@ int main(){
     
     //// --- Output the results in a csv file --- ////
     FILE* ProjectZim;
-    ProjectZim = fopen("/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Test10.csv","w");    // Change name and file location here as applicable
+    ProjectZim = fopen("/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Test11.csv","w");    // Change name and file location here as applicable
     
     
     
