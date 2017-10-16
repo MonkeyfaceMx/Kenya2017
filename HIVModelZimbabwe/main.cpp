@@ -45,6 +45,7 @@ int UN_KenPop=5909800;                                                      // N
 int init_pop =UN_KenPop/100;                                                // Devide UN number by 100 to make manageable and match output files
 int total_population=init_pop;												// set total pop to init pop at start of model
 double Sex_ratio=0.495639296;                                                    // defined ratio of men versus women
+int ageAdult=15;
 
 
 priority_queue<event*, vector<event*>, timeComparison> *p_PQ;				// Pointer to event queue 
@@ -225,7 +226,7 @@ int main(){
     
     //// --- Output the results in a csv file --- ////
     FILE* ProjectZim;
-    ProjectZim = fopen("/Users/Monkeyface/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Test11.csv","w");    // Change name and file location here as applicable
+    ProjectZim = fopen("/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Test11.csv","w");    // Change name and file location here as applicable
     
     
     
