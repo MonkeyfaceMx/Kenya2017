@@ -46,6 +46,9 @@ int*      ArrayMax;
 int nr_NCDs=6;                                         // Change this as you need to
 int nr_Cancers=7;
 
+// Misc
+extern string ParamDirectory;
+
 
 
 ////////////////////////////////////////////////////////
@@ -58,7 +61,7 @@ void loadCD4StartArray(){
     E(cout<< "The CD4_startarray Parameter is being loaded" << endl;)
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;

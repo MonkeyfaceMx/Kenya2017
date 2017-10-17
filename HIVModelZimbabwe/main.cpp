@@ -45,7 +45,9 @@ int UN_KenPop=5909800;                                                      // N
 int init_pop =UN_KenPop/100;                                                // Devide UN number by 100 to make manageable and match output files
 int total_population=init_pop;												// set total pop to init pop at start of model
 double Sex_ratio=0.495639296;                                                    // defined ratio of men versus women
-int ageAdult=15;
+int ageAdult=15;                                                            // This tells the model to count adults as of 15-yo, for validation purposes 
+double ARTbuffer=1.05;                                                      // Central buffer for peeps on ART
+string ParamDirector="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/Pablo_model copy/HIVModelZimbabwe";
 
 
 priority_queue<event*, vector<event*>, timeComparison> *p_PQ;				// Pointer to event queue 

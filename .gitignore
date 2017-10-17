@@ -48,3 +48,5 @@
 
 *.xcuserstate
 .DS_Store
+*.xcuserdatad
+*.xcuserdatad/

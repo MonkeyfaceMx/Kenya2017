@@ -80,6 +80,7 @@ double Risk_NCDHIV[2]={Risk_HIVHT, Risk_HIVCKD};
 int relatedNCD_HIV[2]={0, 5};
 int nr_NCD_HIV=sizeof(relatedNCD_HIV)/sizeof(relatedNCD_HIV[0]);
 extern int ageAdult;
+extern double ARTbuffer;
 
 
 // Note:
@@ -192,11 +193,11 @@ void EventTellNewYear(person *MyPointerToPerson){
     if (*p_GT>=2004){
         
         // Add people on ART until we hit our aim
-        while (count_ARTKids<ARTKids[ART_index] || 1.05*count_ARTMen_sum<ARTMen_sum[ART_index] || 1.05*count_ARTWomen_sum<ARTWomen_sum[ART_index]){
+        while (count_ARTKids<ARTKids[ART_index] || ARTbuffer*count_ARTMen_sum<ARTMen_sum[ART_index] || ARTbuffer*count_ARTWomen_sum<ARTWomen_sum[ART_index]){
             
             //cout << endl << "Its " << *p_GT << " KIDS: There have " << Elig_Kids << " eligible kids and we need to reach " << ARTKids[ART_index] << " and only have " << count_ARTKids   << endl;
-            //cout << "Men: There have " << Elig_Men << " eligible men and we need to reach " << ARTMen_sum[ART_index] << " and only have " << count_ARTMen_sum << " times 10% " << 1.05*count_ARTMen_sum << endl;
-            //cout << "Women: There have " << Elig_Women << " eligible women and we need to reach " << ARTWomen_sum[ART_index] << " and only have " << count_ARTWomen_sum << " times 10% " << 1.05*count_ARTWomen_sum<< endl;
+            //cout << "Men: There have " << Elig_Men << " eligible men and we need to reach " << ARTMen_sum[ART_index] << " and only have " << count_ARTMen_sum << " times 10% " << ARTbuffer*count_ARTMen_sum << endl;
+            //cout << "Women: There have " << Elig_Women << " eligible women and we need to reach " << ARTWomen_sum[ART_index] << " and only have " << count_ARTWomen_sum << " times 10% " << ARTbuffer*count_ARTWomen_sum<< endl;
             
             
             if (count_ARTKids<ARTKids[ART_index] ){
@@ -219,7 +220,7 @@ void EventTellNewYear(person *MyPointerToPerson){
             
             
             // Lets see if adults start ART
-            if (1.05*count_ARTMen_sum<ARTMen_sum[ART_index] || 1.05*count_ARTWomen_sum<ARTWomen_sum[ART_index]){
+            if (ARTbuffer*count_ARTMen_sum<ARTMen_sum[ART_index] || ARTbuffer*count_ARTWomen_sum<ARTWomen_sum[ART_index]){
                 
                 int a=(RandomMinMax_2(1,countHIVRef-1));
                 //cout << "Random number: " << a << " counter: " << countHIVRef << endl;
@@ -231,7 +232,7 @@ void EventTellNewYear(person *MyPointerToPerson){
                     
                     
                     
-                    if (1.05*ARTAdult_Men[ART_index][MyArrayOfPointersToPeople[i]->CD4_cat] > count_ARTAdult_Men[MyArrayOfPointersToPeople[i]->CD4_cat]){
+                    if (ARTbuffer*ARTAdult_Men[ART_index][MyArrayOfPointersToPeople[i]->CD4_cat] > count_ARTAdult_Men[MyArrayOfPointersToPeople[i]->CD4_cat]){
                         
                         MyArrayOfPointersToPeople[i]->ART=*p_GT;                        // Lets set ART date
                         MyArrayOfPointersToPeople[i]->CD4_cat_ARTstart=MyArrayOfPointersToPeople[i]->CD4_cat;       // Lets set CD4 cat at ART start
@@ -247,7 +248,7 @@ void EventTellNewYear(person *MyPointerToPerson){
                 if (MyArrayOfPointersToPeople[i]->Sex==2 && MyArrayOfPointersToPeople[i]->Age>=ageAdult && MyArrayOfPointersToPeople[i]->HIV>0 && MyArrayOfPointersToPeople[i]->HIV<*p_GT && MyArrayOfPointersToPeople[i]->ART==-999 &&MyArrayOfPointersToPeople[i]->Alive==1 && count_ARTWomen_sum<ARTWomen_sum[ART_index]){
                     
                     
-                    if (1.05*ARTAdult_Women[ART_index][MyArrayOfPointersToPeople[i]->CD4_cat] > count_ARTAdult_Women[MyArrayOfPointersToPeople[i]->CD4_cat]){
+                    if (ARTbuffer*ARTAdult_Women[ART_index][MyArrayOfPointersToPeople[i]->CD4_cat] > count_ARTAdult_Women[MyArrayOfPointersToPeople[i]->CD4_cat]){
                         
                         
                         MyArrayOfPointersToPeople[i]->ART=*p_GT;            // Lets set ART date

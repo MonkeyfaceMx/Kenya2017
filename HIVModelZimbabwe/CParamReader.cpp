@@ -33,7 +33,7 @@ CParamReader::~CParamReader()
 
 
 // Set the file name and check that it exists, unattaches previous file if necessary.
-bool CParamReader::setNewFileName(char* filePath)
+bool CParamReader::setNewFileName(string filePath)
 {
     
     if(paramFileStream.is_open())       // If there's a file attached, remove it.
@@ -46,8 +46,8 @@ bool CParamReader::setNewFileName(char* filePath)
     
     paramFileStream.close();            // Just checking, close it
     
-    filePathString = new char[strlen(filePath)+1];
-    strcpy(filePathString, filePath);
+    filePathString = new char[(filePath.length())+1];
+    strcpy(filePathString, filePath.c_str());
     
     return true;
 }
