@@ -34,6 +34,7 @@ double*** CD4_startarray;
 double**  CD4_prog_rates;
 double*** Death_CD4_rates;
 double*** ART_CD4_rates;
+int* ARTKids;
 
 // Demographic Arrays
 double**  NrChildrenArray;
@@ -45,6 +46,9 @@ int*      ArrayMax;
 // NCD Arrays
 int nr_NCDs=6;                                         // Change this as you need to
 int nr_Cancers=7;
+
+// Misc
+extern string ParamDirectory;
 
 
 
@@ -58,7 +62,7 @@ void loadCD4StartArray(){
     E(cout<< "The CD4_startarray Parameter is being loaded" << endl;)
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;
@@ -124,7 +128,7 @@ void loadCD4ProgArray()
     
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;
@@ -185,7 +189,7 @@ void loadCD4DeathArray()
     
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;
@@ -242,7 +246,48 @@ void loadCD4DeathArray()
     E(cout<< "The CD4_death_rates Parameter has been loaded" << endl;)
 }
 
-
+void loadARTKidsArray()
+{
+    E(cout<< "The ARTKids Parameter is being loaded" << endl;)
+    
+    CParamReader myReader;
+    string fileName = ParamDirectory + "LoadParam.txt";
+    if(! myReader.setNewFileName(fileName))
+    {
+        cout << "File " << fileName << "doesn't exist." << endl;
+        exit(0);
+    }
+    E(cout << "File " << fileName << " successfully added." << endl;)
+    
+    char ParamName[] = "ARTKids";
+    int length ;
+    int nr_rows;
+    int nr_columns;
+    stringstream ss;
+    vector<double> data;
+    
+    // Load the data
+    char* myValue = myReader.getParamString(ParamName,length,nr_rows,nr_columns);
+    // cout << endl << endl << "FINAL!!!: " << endl << ParamName << " = " << endl <<  " " << myValue << endl << "length = " << length << " nr_columns: " << nr_columns << " nr_rows: " << nr_rows << endl;
+    
+    // Convert to array
+    // 1. Convert char* myValue to vector
+    ss << myValue;
+    double a;
+    while (ss >> a){data.push_back(a);}
+    // 2. Convert vector to array
+    int col=nr_columns;
+    
+    // Make the *** Array
+    ARTKids= new int [col];
+    
+    for (int i=0; i<col; i++){
+        ARTKids[i]=data[i];
+        // cout << "I: " << i << " I: " << i << endl;
+        // cout << "ARTKidsArray " << ARTKids[i] << endl;
+    }
+    E(cout<< "The ARTKids Parameter has been loaded" << endl;)    
+}
 
 
 void loadCD4ARTArray()
@@ -251,7 +296,7 @@ void loadCD4ARTArray()
     
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;
@@ -316,7 +361,7 @@ void loadNrChildren()
     
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;
@@ -377,7 +422,7 @@ void loadNrChildrenProb()
     
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;
@@ -431,7 +476,7 @@ void loadAgeDistribution()
     
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;
@@ -492,7 +537,7 @@ void loadAgeMin()
     
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;
@@ -512,7 +557,7 @@ void loadAgeMin()
     
     // Lets load the data
     char* myValue = myReader.getParamString(ParamName,length, nr_rows, nr_columns);
-    //cout << endl << endl << "FINAL!!!: " << endl << ParamName << " = " << endl <<  " " << myValue << endl << "length = " << length << " nr_columns: " << nr_columns << " nr_rows: " << nr_rows << endl;
+    // cout << endl << endl << "FINAL!!!: " << endl << ParamName << " = " << endl <<  " " << myValue << endl << "length = " << length << " nr_columns: " << nr_columns << " nr_rows: " << nr_rows << endl;
     
     
     // Lets convert to an array
@@ -545,7 +590,7 @@ void loadAgeMax()
     
     // 1. make a param reader object.
     CParamReader myReader;
-    char fileName[] = "LoadParam.txt";
+    string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
         cout << "File " << fileName << " doesn't exist." << endl;

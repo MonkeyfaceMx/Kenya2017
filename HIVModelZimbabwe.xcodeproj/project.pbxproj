@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25F0706D1F9A0F0200AE936B /* CountryParams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F0706B1F9A0F0200AE936B /* CountryParams.cpp */; };
 		73BD22161C58F94800BC7AC6 /* CParamReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73BD22151C58F94800BC7AC6 /* CParamReader.cpp */; };
 		73BD22301C58F96100BC7AC6 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73BD221B1C58F96100BC7AC6 /* event.cpp */; };
 		73BD22311C58F96100BC7AC6 /* eventfunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73BD221D1C58F96100BC7AC6 /* eventfunctions.cpp */; };
@@ -29,6 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		25F0706B1F9A0F0200AE936B /* CountryParams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CountryParams.cpp; sourceTree = "<group>"; };
+		25F0706C1F9A0F0200AE936B /* CountryParams.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CountryParams.hpp; sourceTree = "<group>"; };
 		73BD220A1C58F87C00BC7AC6 /* HIVModelZimbabwe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HIVModelZimbabwe; sourceTree = BUILT_PRODUCTS_DIR; };
 		73BD22151C58F94800BC7AC6 /* CParamReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CParamReader.cpp; sourceTree = "<group>"; };
 		73BD22191C58F96100BC7AC6 /* CParamReader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CParamReader.hpp; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				73BD222C1C58F96100BC7AC6 /* person.cpp */,
 				73BD222D1C58F96100BC7AC6 /* person.h */,
 				73BD222E1C58F96100BC7AC6 /* Test.txt */,
+				25F0706B1F9A0F0200AE936B /* CountryParams.cpp */,
+				25F0706C1F9A0F0200AE936B /* CountryParams.hpp */,
 			);
 			path = HIVModelZimbabwe;
 			sourceTree = "<group>";
@@ -146,7 +151,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 73BD22051C58F87C00BC7AC6 /* Build configuration list for PBXProject "HIVModelZimbabwe" */;
+			buildConfigurationList = 73BD22051C58F87C00BC7AC6 /* Build configuration list for PBXProject "hivmodelzimbabwe" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -170,6 +175,7 @@
 			files = (
 				73BD22301C58F96100BC7AC6 /* event.cpp in Sources */,
 				73BD22311C58F96100BC7AC6 /* eventfunctions.cpp in Sources */,
+				25F0706D1F9A0F0200AE936B /* CountryParams.cpp in Sources */,
 				73BD22331C58F96100BC7AC6 /* LoadParams.cpp in Sources */,
 				73BD22161C58F94800BC7AC6 /* CParamReader.cpp in Sources */,
 				73BD22321C58F96100BC7AC6 /* eventQ.cpp in Sources */,
@@ -281,7 +287,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		73BD22051C58F87C00BC7AC6 /* Build configuration list for PBXProject "HIVModelZimbabwe" */ = {
+		73BD22051C58F87C00BC7AC6 /* Build configuration list for PBXProject "hivmodelzimbabwe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				73BD220F1C58F87C00BC7AC6 /* Debug */,

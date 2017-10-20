@@ -1,14 +1,18 @@
-//
-//  CountryParams.hpp
-//  HIVModelZimbabwe
-//
-//  Created by Pablo on 20/10/2017.
-//  Copyright © 2017 Mikaela Smit. All rights reserved.
-//
+//////////////////////////////////////////////////////////
+//                                                      //
+//                  CountryParams.hpp                   //
+//            Created by Pablo on 20/10/2017.           //
+//  Copyright © 2017 Mikaela Smit. All rights reserved. //
+//                                                      //
+//////////////////////////////////////////////////////////
 
 #ifndef CountryParams_hpp
 #define CountryParams_hpp
 
 #include <stdio.h>
 
-#endif /* CountryParams_hpp */
+void selectCountry(int x);
+void selectKenya();
+void selectZimbabwe();
+
+#endif 

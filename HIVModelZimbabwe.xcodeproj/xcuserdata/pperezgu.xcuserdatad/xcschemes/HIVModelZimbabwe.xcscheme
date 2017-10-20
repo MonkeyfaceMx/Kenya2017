@@ -17,7 +17,7 @@
                BlueprintIdentifier = "73BD22091C58F87C00BC7AC6"
                BuildableName = "HIVModelZimbabwe"
                BlueprintName = "HIVModelZimbabwe"
-               ReferencedContainer = "container:HIVModelZimbabwe.xcodeproj">
+               ReferencedContainer = "container:hivmodelzimbabwe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,7 +36,7 @@
             BlueprintIdentifier = "73BD22091C58F87C00BC7AC6"
             BuildableName = "HIVModelZimbabwe"
             BlueprintName = "HIVModelZimbabwe"
-            ReferencedContainer = "container:HIVModelZimbabwe.xcodeproj">
+            ReferencedContainer = "container:hivmodelzimbabwe.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -61,7 +61,7 @@
             BlueprintIdentifier = "73BD22091C58F87C00BC7AC6"
             BuildableName = "HIVModelZimbabwe"
             BlueprintName = "HIVModelZimbabwe"
-            ReferencedContainer = "container:HIVModelZimbabwe.xcodeproj">
+            ReferencedContainer = "container:hivmodelzimbabwe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -84,7 +84,7 @@
             BlueprintIdentifier = "73BD22091C58F87C00BC7AC6"
             BuildableName = "HIVModelZimbabwe"
             BlueprintName = "HIVModelZimbabwe"
-            ReferencedContainer = "container:HIVModelZimbabwe.xcodeproj">
+            ReferencedContainer = "container:hivmodelzimbabwe.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

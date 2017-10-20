@@ -4,7 +4,7 @@
 //    Copyright (c) 2014 Mikaela Smit. All rights reserved.   //
 ////////////////////////////////////////////////////////////////
 
-#include <iostream>                                                         // important libraries
+#include <iostream>
 #include <stdlib.h>
 #include <time.h>
 #include <ctime>
@@ -15,8 +15,6 @@
 #include <stdlib.h>
 #include <cmath>
 #include <math.h>
-
-
 #include "person.h"
 #include "event.h"
 #include "eventQ.h"
@@ -24,59 +22,77 @@
 #include "errorcoutmacro.h"
 #include "LoadParams.h"
 #include "CParamReader.hpp"
+#include "CountryParams.hpp"
 
+using namespace std;
 
-using namespace std;                                                        // use feature of the C++ Standard Library such as "string" and "vector"
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////                                   VARIABLE PARAMETERS                                                 //////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// STEP 1 --- SELECT THE COUNTRY TO RUN THE MODEL
+// 1=KENYA      2=ZIMBABWE
+int country=1;
 
-// !!!  IMPORTANT MODEL INFORMATION !!!
-// 2. Main parameters for NCD can be changed at strat of eventfunction.cpp
-// 3. Caution: if end date is extended beyond 2035 checks need to made for arrays, parameters etc!
+// STEP 2 --- DEFINE THE WORKING DIRECTORY
+string ParamDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/Model_Africa/HIVModelZimbabwe/";
 
+// STEP 3 --- DEFINE THE DIRECTORY AND NAME FOR THE OUTPUT FILE
+string OutputFileDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Monkey19.csv";
+
+                            /// STEP 4 --- AT WHAT FACTOR SHOULD WE RUN THE POPULATION?
+int factor=100;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////                                   MODIFY IF NEEDED PARAMETERS                                         //////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+double StartYear=1950;
+int EndYear=2035;
+const long long int final_number_people=100000000;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //// --- MAIN PARAMETERS - CENTRALLY AVAILABLE --- ////
-double *p_GT;																// Pointer to global time
-int *p_PY;																	// Pointer to year range currently in (e.g. 1950 to 1955)
-int PY=0;																	// Set the first pointer to year range i.e. 1950-1955
-double StartYear=1950;														// Set start date of model
-int EndYear=2035;															// Set end date of model
-const long long int final_number_people=100000000;							// Give a large number to contain all people to be modelled
-int UN_KenPop=5909800;                                                      // Number of people 1st Jan 1950 (calculated in Excel)
-int init_pop =UN_KenPop/100;                                                // Devide UN number by 100 to make manageable and match output files
-int total_population=init_pop;												// set total pop to init pop at start of model
-double Sex_ratio=0.495639296;                                                    // defined ratio of men versus women
-int ageAdult=15;
+double *p_GT;
+int *p_PY;
+int PY=0;
 
+//// --- COUNTRY-SPECIFIC PARAMETERS: ADJUST IN CountryParams.cpp!!!! ////
+int UN_Pop;
+int init_pop;
+int total_population;
+double Sex_ratio;
+int ageAdult;
+double ARTbuffer;
+double MortAdj;
+int ART_start_yr;
+double background_d;
+double HIV_d;
+double IHD_d;
+double Depression_d;
+double Asthma_d;
+double Stroke_d;
+double Diabetes_d;
+double CKD_d;
+double Colo_d;
+double Liver_d;
+double Oeso_d;
+double Prostate_d;
+double OtherCan_d;
+extern double MortRisk[6];              // Adjust in eventsfunctions.cpp
+extern double MortRisk_Cancer[5];       // Adjust in eventsfunctions.cpp
+
+
+////////////////////////////////////////////////////////////////////////
 
 priority_queue<event*, vector<event*>, timeComparison> *p_PQ;				// Pointer to event queue 
 person** MyArrayOfPointersToPeople = new person*[final_number_people];		// First 'person*' is a pointer (address) and 'new person' and space for x person which will point to actual person below
 vector<event *> Events;
 
-int ART_start_yr=2004;
-
-// THIS IS FOR FITTING ONLY - REOMVE ONCE DONE
-double one;
-double two;
-double three;
-double four;
-double five;
-double six;
-double seven;
-double eight;
-double nine;
-double ten;
-double eleven;
-double twelve;
-double thirteen;
-double fourteen;
-
-extern double MortRisk[6];
-extern double MortRisk_Cancer[5];
-extern double MortAdj;
-
 double RandomMinMax_3(int min, int max){							// Provide function for random number generator between min and max number
     return rand()%(max-min+1)+min;							    // !!!!Note: if min=0 and max=4 it will generate 0,1,2,3,4
 }
+
 
 
 //// --- RUN THE MAIN MODEL --- ////
@@ -86,52 +102,16 @@ int main(){
     
     cout << MortRisk << endl;
     cout << "Testing changes" << endl;
-    // Lets do some fitting!
-    /*one   = RandomMinMax_3(100, 100)/100;
-    two   = RandomMinMax_3(100, 100)/100;
-    three = RandomMinMax_3(100, 100)/100;
-    four  = RandomMinMax_3(100, 100)/100;
-    cout << "Strok Risk " << four << endl;
-    five  = RandomMinMax_3(100, 100)/100;
-    six   = RandomMinMax_3(100, 100)/100;
-    seven = RandomMinMax_3(100, 100)/100;
-    eight = RandomMinMax_3(100, 100)/100;
-    nine  = RandomMinMax_3(100, 100)/100;
-    ten   = RandomMinMax_3(100, 100)/100;
-    eleven= RandomMinMax_3(100, 100)/100;
-    twelve= RandomMinMax_3(100, 100)/100;
-    thirteen= RandomMinMax_3(100, 100)/100;
-    fourteen= RandomMinMax_3(100, 100)/100;
-    
-    MortRisk[0]= one;
-    MortRisk[1]= two;
-    MortRisk[2]= three;
-    MortRisk[3]= four;
-    MortRisk[4]= five;
-    MortRisk[5]= six;
-    
-    MortRisk_Cancer[0] = seven;
-    MortRisk_Cancer[1] = eight;
-    MortRisk_Cancer[2] = nine;
-    MortRisk_Cancer[3] = ten;
-    MortRisk_Cancer[4] = eleven;
-    MortRisk_Cancer[5] = twelve;
-    MortRisk_Cancer[6] = thirteen;
     
     
-    MortAdj = four;*/
+    cout << endl << "Hola amigos!" << endl << endl ;								// Check if model is running
     
-    cout << MortRisk[0] << endl;
-    cout << MortRisk[1] << endl;
-    cout << MortRisk[2] << endl;
-    cout << MortRisk[3] << endl;
-    cout << MortRisk[4] << endl;
-    cout << MortRisk[5] << endl;
-    cout << MortRisk[6] << endl;
+    selectCountry(country);
+    cout << "Population was of " << UN_Pop << " in 1950, with a sex ratio of " << Sex_ratio << ", per UN estimates." << endl;
+    cout << "Model calibrated to: 1) Run at a " << factor << "th of the population (N=" << init_pop << "); 2) Adult = " << ageAdult << " years of age on; 3) Mortality adjustment = "
+    << MortAdj << "; 4) ART buffer = " << ARTbuffer << "; 5) ART was introduced in " << ART_start_yr << endl << endl;
     
-    cout << endl << "Hello, Rachel & Pablo!" << endl << endl ;								// Check if model is running
-   
-    cout << "Hi laptop -welcome to git" << endl;
+
     //// --- Load parameters --- ////
     cout << "Section 1 - We are loading the arrays" << endl;
     
@@ -141,6 +121,9 @@ int main(){
     loadCD4DeathArray();
     loadCD4ARTArray();
     
+    // Load ART Arrays
+    loadARTKidsArray();
+    // TD: move ART men andd women arrays from eventsfunction to LoadParam.txt following the ARTKids example
     
     // Load Demographic Arrays
     loadAgeDistribution();
@@ -148,7 +131,6 @@ int main(){
     loadAgeMax();
     loadNrChildren();
     loadNrChildrenProb();
-    
     
     // Load Large Arrays
     loadBirthArray();
@@ -159,7 +141,7 @@ int main(){
     loadNCDArray();
     loadCancerArray();
     
-    cout << "Section 2 - We finished loading the arrays" << endl;
+    cout << "Section 2 - All arrays loaded successfully" << endl;
     
     
     //// ---- Warning Code --- ////
@@ -180,13 +162,14 @@ int main(){
     
     //// --- MAKING POPULATION--- ////
     
-    cout << "Section 3 - We are going to create a population" << endl;
+    cout << "Section 3 - We're going to create a population" << endl;
     
     for(int i=0; i<total_population; i++){									// REMEMBER: this needs to stay "final_number_people" or it will give error with CSV FILES!!!!
         MyArrayOfPointersToPeople[i]=new person();							// The 'new person' the actual new person
         int a=i;
         (MyArrayOfPointersToPeople[i])->PersonIDAssign(a);					// --- Assign PersonID ---
     }
+    // cout << "We have assigned a new ID to " << endl;
     
     for(int i=0; i<total_population; i++){
         (MyArrayOfPointersToPeople[i])->Alive=1;							// --- Assign Life Status ---
@@ -199,7 +182,7 @@ int main(){
         (MyArrayOfPointersToPeople[i])->GetMyDateCancers();                     // --- Get date of NCDs ---
     }
     
-    cout << "Section 4 - We finished crating a population" << endl;
+    cout << "Section 4 - We've finished creating a population" << endl;
     
     
     //// --- EVENTQ --- ////
@@ -226,7 +209,7 @@ int main(){
     
     //// --- Output the results in a csv file --- ////
     FILE* ProjectZim;
-    ProjectZim = fopen("/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Test11.csv","w");    // Change name and file location here as applicable
+    ProjectZim = fopen(OutputFileDirectory.c_str(),"w");
     
     
     
@@ -271,48 +254,34 @@ int main(){
     fclose(ProjectZim);
     
     // COUNT OUTPUT FOR FITTING
-    int count_2013deaths=0;
+    int count_2016deaths=0;
     int count_causeofdeath[14]={0};
     
     for (int i=0; i<total_population; i++) {
         if (MyArrayOfPointersToPeople[i]->DateOfDeath>=2013 && MyArrayOfPointersToPeople[i]->DateOfDeath<2014)
         {
-            count_2013deaths++;
+            count_2016deaths++;
             count_causeofdeath[MyArrayOfPointersToPeople[i]->CauseOfDeath-1]++;
         }
     }
     
     // Calculate percentages
-    cout << "FINAL: total: " << count_2013deaths << " and nr background " << count_causeofdeath[0] << endl;
+    cout << "FINAL: total: " << count_2016deaths << " and nr background " << count_causeofdeath[0] << endl;
     
-    double background_m =(count_causeofdeath[0]/(double)count_2013deaths)*100;
-    double HIV_m        =(count_causeofdeath[1]/(double)count_2013deaths)*100;
-    double HT_m         =(count_causeofdeath[2]/(double)count_2013deaths)*100;
-    double Depression_m =(count_causeofdeath[3]/(double)count_2013deaths)*100;
-    double Asthma_m     =(count_causeofdeath[4]/(double)count_2013deaths)*100;
-    double Stroke_m     =(count_causeofdeath[5]/(double)count_2013deaths)*100;
-    double Diabetes_m   =(count_causeofdeath[6]/(double)count_2013deaths)*100;
-    double CKD_m        =(count_causeofdeath[7]/(double)count_2013deaths)*100;
-    double Colo_m       =(count_causeofdeath[8]/(double)count_2013deaths)*100;
-    double Liver_m      =(count_causeofdeath[9]/(double)count_2013deaths)*100;
-    double Oeso_m       =(count_causeofdeath[10]/(double)count_2013deaths)*100;
-    double Prostate_m    =(count_causeofdeath[11]/(double)count_2013deaths)*100;
-    double OtherCan_m   =(count_causeofdeath[12]/(double)count_2013deaths)*100;
+    double background_m =(count_causeofdeath[0]/(double)count_2016deaths)*100;
+    double HIV_m        =(count_causeofdeath[1]/(double)count_2016deaths)*100;
+    double HT_m         =(count_causeofdeath[2]/(double)count_2016deaths)*100;
+    double Depression_m =(count_causeofdeath[3]/(double)count_2016deaths)*100;
+    double Asthma_m     =(count_causeofdeath[4]/(double)count_2016deaths)*100;
+    double Stroke_m     =(count_causeofdeath[5]/(double)count_2016deaths)*100;
+    double Diabetes_m   =(count_causeofdeath[6]/(double)count_2016deaths)*100;
+    double CKD_m        =(count_causeofdeath[7]/(double)count_2016deaths)*100;
+    double Colo_m       =(count_causeofdeath[8]/(double)count_2016deaths)*100;
+    double Liver_m      =(count_causeofdeath[9]/(double)count_2016deaths)*100;
+    double Oeso_m       =(count_causeofdeath[10]/(double)count_2016deaths)*100;
+    double Prostate_m    =(count_causeofdeath[11]/(double)count_2016deaths)*100;
+    double OtherCan_m   =(count_causeofdeath[12]/(double)count_2016deaths)*100;
     
-    // GBD percentages
-    double background_d =71.32;
-    double HIV_d        =15.56;
-    double HT_d         =3.99;
-    double Depression_d =0.0;
-    double Asthma_d     =0.45;
-    double Stroke_d     =3.92;
-    double Diabetes_d   =1.27;
-    double CKD_d        =1.5;
-    double Colo_d       =0.39;
-    double Liver_d      =0.34;
-    double Oeso_d       =0.32;
-    double Prostate_d    =0.31;
-    double OtherCan_d   =0.71;
     
     // Output the model percentages
     cout << "Background " << background_m << endl;
@@ -328,25 +297,12 @@ int main(){
     cout << "Oeso "       << Oeso_m << endl;
     cout << "Prostate "    << Prostate_m << endl;
     cout << "OtherCan "   << OtherCan_m << endl;
-    
-    cout << endl << "Printing the variable values " << endl;
-    cout << one << endl;
-    cout << two << endl;
-    cout << three << endl;
-    cout << four << endl;
-    cout << five << endl;
-    cout << six << endl;
-    cout << seven << endl;
-    cout << eight << endl;
-    cout << nine << endl;
-    cout << ten << endl;
-    cout << eleven << endl;
-    cout << twelve << endl;
+
     
     // Least square calculation
     double sum_MinLik=  pow ((background_m  - background_d),2) +
     pow ((HIV_m         - HIV_d),2) +
-    pow ((HT_m          - HT_d),2) +
+    pow ((HT_m          - IHD_d),2) +
     pow ((Depression_m  - Depression_d),2) +
     pow ((Asthma_m      - Asthma_d),2) +
     pow ((Stroke_m      - Stroke_d),2) +
@@ -378,7 +334,7 @@ int main(){
     }
     
     // --- End of code ---
-    cout << endl << "Hi Jack, so sorry\n";
+    cout << endl << "A huevo!\n";
     system("pause");
     return 0;
     

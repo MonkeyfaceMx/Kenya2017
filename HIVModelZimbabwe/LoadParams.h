@@ -27,6 +27,8 @@ void loadCD4ProgArray();
 void loadCD4DeathArray();
 void loadCD4ARTArray();
 
+void loadARTKidsArray();
+
 void loadNrChildren();
 void loadNrChildrenProb();
 void loadAgeDistribution();
