@@ -31,7 +31,7 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // STEP 1 --- SELECT THE COUNTRY TO RUN THE MODEL
-// 1=KENYA      2=ZIMBABWE
+// 1=KENYA      2=ZIMBABWE      3=MALAWI
 int country=1;
 
 // STEP 2 --- DEFINE THE WORKING DIRECTORY
