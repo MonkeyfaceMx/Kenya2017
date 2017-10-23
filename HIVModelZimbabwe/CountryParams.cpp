@@ -41,8 +41,8 @@ extern double Oeso_d;
 extern double Prostate_d;
 extern double OtherCan_d;
 
-/////////////////// SECTION 1: KENYA PARAMETERS //////////////////////
-void selectCountry(int x){
+/////////////////// FUNCTION: IF LOOP FOR COUNTRY-SPECIFIC PARAMETERS //////////////////////
+void loadCountryParams(int x){
     if (x == 1){
         cout << "You have selected Kenya" << endl;
         UN_Pop=5909800;
@@ -69,11 +69,32 @@ void selectCountry(int x){
         OtherCan_d   =0.71;
     }
     
-    /*
-     //else if (country == 2){selectZimbabwe};
-     cout << "UN pop " << UN_Pop << " Sex ratio " << Sex_ratio << endl;
+ else if (x == 2){
+     cout << "You have selected Zimbabwe" << endl;
+     UN_Pop=2565000;
+     init_pop=UN_Pop/factor;
+     total_population=init_pop;
+     ART_start_yr=2004;
+     ageAdult=15;
+     Sex_ratio=0.4986;
+     ARTbuffer=1;
+     MortAdj=1;
+     // Mortality percentages from GBD 2013
+     background_d =56.6;
+     HIV_d        =29.6;
+     IHD_d         =1.00;
+     Depression_d =0.0;
+     Asthma_d     =0.7;
+     Stroke_d     =4.6;
+     Diabetes_d   =1.7;
+     CKD_d        =1.3;
+     Colo_d       =0.3;
+     Liver_d      =0.3;
+     Oeso_d       =0.6;
+     Prostate_d    =0.2;
+     OtherCan_d   =3.1;
      }
-     */
+
     
 }
 

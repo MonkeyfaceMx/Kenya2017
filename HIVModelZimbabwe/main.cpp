@@ -50,65 +50,84 @@ double StartYear=1950;
 int EndYear=2035;
 const long long int final_number_people=100000000;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//// --- MAIN PARAMETERS - CENTRALLY AVAILABLE --- ////
-double *p_GT;
-int *p_PY;
-int PY=0;
-
-//// --- COUNTRY-SPECIFIC PARAMETERS: ADJUST IN CountryParams.cpp!!!! ////
-int UN_Pop;
-int init_pop;
-int total_population;
-double Sex_ratio;
-int ageAdult;
-double ARTbuffer;
-double MortAdj;
-int ART_start_yr;
-double background_d;
-double HIV_d;
-double IHD_d;
-double Depression_d;
-double Asthma_d;
-double Stroke_d;
-double Diabetes_d;
-double CKD_d;
-double Colo_d;
-double Liver_d;
-double Oeso_d;
-double Prostate_d;
-double OtherCan_d;
-extern double MortRisk[6];              // Adjust in eventsfunctions.cpp
-extern double MortRisk_Cancer[5];       // Adjust in eventsfunctions.cpp
 
 
-////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////                      DO NOT MODIFY - CRITICAL PARAMETERS AND FUNCTIONS                               //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////                                                POINTERS                                                //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+double      *p_GT;                                                                                              //////////
+int         *p_PY;                                                                                              //////////
+int         PY=0;                                                                                               //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////                    --- COUNTRY-SPECIFIC PARAMETERS: ADJUST IN CountryParams.cpp!!!!                    //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int         UN_Pop;                                                                                             //////////
+int         init_pop;                                                                                           //////////
+int         total_population;                                                                                   //////////
+double      Sex_ratio;                                                                                          //////////
+int         ageAdult;                                                                                           //////////
+double      ARTbuffer;                                                                                          //////////
+double      MortAdj;                                                                                            //////////
+int         ART_start_yr;                                                                                       //////////
+double      background_d;                                                                                       //////////
+double      HIV_d;                                                                                              //////////
+double      IHD_d;                                                                                              //////////
+double      Depression_d;                                                                                       //////////
+double      Asthma_d;                                                                                           //////////
+double      Stroke_d;                                                                                           //////////
+double      Diabetes_d;                                                                                         //////////
+double      CKD_d;                                                                                              //////////
+double      Colo_d;                                                                                             //////////
+double      Liver_d;                                                                                            //////////
+double      Oeso_d;                                                                                             //////////
+double      Prostate_d;                                                                                         //////////
+double      OtherCan_d;                                                                                         //////////
+extern double MortRisk[6];              // Adjust in eventsfunctions.cpp                                        //////////
+extern double MortRisk_Cancer[5];       // Adjust in eventsfunctions.cpp                                        //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////                                  POINTER TO EVENT QUEUE                                              //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+priority_queue<event*, vector<event*>, timeComparison> *p_PQ;				                                    //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////                      person** is a POINTER to a pointer (address)                                    //////////
+//////////                      'new person*' is a pointer to the actual person below                           //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+person** MyArrayOfPointersToPeople = new person*[final_number_people];                                          //////////
+vector<event *> Events;                                                                                         //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////                      Function for random number generator between min and max                        //////////
+/////////                       !!!!Note: if min=0 and max=4 it will generate 0,1,2,3,4                         //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+double RandomMinMax_3(int min, int max){                                                                        //////////
+    return rand()%(max-min+1)+min;                                                                              //////////
+}                                                                                                               //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-priority_queue<event*, vector<event*>, timeComparison> *p_PQ;				// Pointer to event queue 
-person** MyArrayOfPointersToPeople = new person*[final_number_people];		// First 'person*' is a pointer (address) and 'new person' and space for x person which will point to actual person below
-vector<event *> Events;
 
-double RandomMinMax_3(int min, int max){							// Provide function for random number generator between min and max number
-    return rand()%(max-min+1)+min;							    // !!!!Note: if min=0 and max=4 it will generate 0,1,2,3,4
-}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////                        LET'S RUN THE MAIN FUNCTION OF THE MODEL!!!                                   //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-//// --- RUN THE MAIN MODEL --- ////
 int main(){
     
-    srand(time(NULL));														// Random Number generator using PC time
+    srand(time(NULL));														      // Random Number generator using PC time
     
     cout << MortRisk << endl;
     cout << "Testing changes" << endl;
     
     
-    cout << endl << "Hola amigos!" << endl << endl ;								// Check if model is running
+    cout << endl << "Jambo / Hello / Hola!" << endl << endl ;								  // Check if model is running
     
-    selectCountry(country);
+    // Call the function that loads country-specific parameters
+    loadCountryParams(country);
     cout << "Population was of " << UN_Pop << " in 1950, with a sex ratio of " << Sex_ratio << ", per UN estimates." << endl;
-    cout << "Model calibrated to: 1) Run at a " << factor << "th of the population (N=" << init_pop << "); 2) Adult = " << ageAdult << " years of age on; 3) Mortality adjustment = "
+    cout << "Model calibrated to: 1) Run at a " << factor << "th of the population (N=" << init_pop << "); 2) Adult = "
+    << ageAdult << " years of age on; 3) Mortality adjustment = "
     << MortAdj << "; 4) ART buffer = " << ARTbuffer << "; 5) ART was introduced in " << ART_start_yr << endl << endl;
     
 
@@ -123,7 +142,8 @@ int main(){
     
     // Load ART Arrays
     loadARTKidsArray();
-    // TD: move ART men andd women arrays from eventsfunction to LoadParam.txt following the ARTKids example
+    loadARTWomenArray();
+    loadARTMenArray();
     
     // Load Demographic Arrays
     loadAgeDistribution();
@@ -334,7 +354,7 @@ int main(){
     }
     
     // --- End of code ---
-    cout << endl << "A huevo!\n";
+    cout << endl << "Kwaheri / Goodbye / Adios!\n";
     system("pause");
     return 0;
     

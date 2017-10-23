@@ -39,6 +39,8 @@ extern double**  CD4_prog_rates;
 extern double*** Death_CD4_rates;
 extern double*** ART_CD4_rates;
 extern int* ARTKids;
+extern int** ARTMen;
+extern int** ARTWomen;
 
 extern double**  NCDArray;
 extern int*      NCDAgeArrayMin;
@@ -117,7 +119,7 @@ int nr_NCD_HT=sizeof(relatedNCDs_HT)/sizeof(relatedNCDs_HT[0]);
 
 
 //// --- ART Array Parameter --- ////
-int ARTAdult_Men[13][7]={           // ART by CD4 count from 2004 to 2015; last line is repeated
+/*int ARTAdult_Men[13][7]={           // ART by CD4 count from 2004 to 2015; last line is repeated
         {0,     0,     0,     14,     18,     11,     11},
         {0,     0,     0,     47,     60,     35,     32},
         {0,     0,     0,     107,    134,    77,     67},
@@ -131,8 +133,8 @@ int ARTAdult_Men[13][7]={           // ART by CD4 count from 2004 to 2015; last 
         {30,    73,    350,   564,    599,    276,    180},
         {67,    177,   419,   609,    664,    312,    204},
         {67,    177,   419,   609,    664,    312,    204},};
-
-int ARTAdult_Women[13][7]={
+*/
+/*int ARTAdult_Women[13][7]={
         {0,     0,     0,     18,     23,     14,     14},
         {0,     0,     0,     59,     75,     44,     42},
         {0,     0,     0,     134,    168,    98,     89},
@@ -146,7 +148,7 @@ int ARTAdult_Women[13][7]={
         {144,   294,   1034,  1022,   1098,   501,    311},
         {287,   575,   1197,  1116,   1173,   520,    316},
         {287,   575,   1197,  1116,   1173,   520,    316},};
-
+*/
 
 // Parameters sums (sums of above arrays (across CD4 count - total for year)
 int ARTMen_sum[13] =  {55, 174, 384, 635, 877, 1200, 1554, 1852, 1852, 1916, 2072, 2451, 2451};
@@ -155,7 +157,7 @@ int ARTWomen_sum[13]= {70, 221, 489, 808, 1116, 1530, 2007, 2743, 3429, 3808, 44
 
 
 // Count to compare to sum and CD4-specific numbers
-int count_ARTAdult_Men[7]={0, 0, 0, 0, 0, 0, 0};        // Count by CD4 count category
+int count_ARTMen[7]={0, 0, 0, 0, 0, 0, 0};        // Count by CD4 count category
 int count_ARTAdult_Women[7]={0, 0, 0, 0, 0, 0, 0};      // Count by CD4 count category
 int count_ARTMen_sum=0;                                 // Count the sum for the year - men
 int count_ARTWomen_sum=0;                               // Count the sum for the year - women
@@ -233,11 +235,11 @@ void EventTellNewYear(person *MyPointerToPerson){
                     
                     
                     
-                    if (ARTbuffer*ARTAdult_Men[ART_index][MyArrayOfPointersToPeople[i]->CD4_cat] > count_ARTAdult_Men[MyArrayOfPointersToPeople[i]->CD4_cat]){
+                    if (ARTbuffer*ARTMen[ART_index][MyArrayOfPointersToPeople[i]->CD4_cat] > count_ARTMen[MyArrayOfPointersToPeople[i]->CD4_cat]){
                         
                         MyArrayOfPointersToPeople[i]->ART=*p_GT;                        // Lets set ART date
                         MyArrayOfPointersToPeople[i]->CD4_cat_ARTstart=MyArrayOfPointersToPeople[i]->CD4_cat;       // Lets set CD4 cat at ART start
-                        count_ARTAdult_Men[MyArrayOfPointersToPeople[i]->CD4_cat]++;    // Update our counter CD4/ART array
+                        count_ARTMen[MyArrayOfPointersToPeople[i]->CD4_cat]++;    // Update our counter CD4/ART array
                         count_ARTMen_sum++;                                             // Update the sum counter
                         Elig_Men=Elig_Men-1;
                     }
@@ -249,7 +251,7 @@ void EventTellNewYear(person *MyPointerToPerson){
                 if (MyArrayOfPointersToPeople[i]->Sex==2 && MyArrayOfPointersToPeople[i]->Age>=ageAdult && MyArrayOfPointersToPeople[i]->HIV>0 && MyArrayOfPointersToPeople[i]->HIV<*p_GT && MyArrayOfPointersToPeople[i]->ART==-999 &&MyArrayOfPointersToPeople[i]->Alive==1 && count_ARTWomen_sum<ARTWomen_sum[ART_index]){
                     
                     
-                    if (ARTbuffer*ARTAdult_Women[ART_index][MyArrayOfPointersToPeople[i]->CD4_cat] > count_ARTAdult_Women[MyArrayOfPointersToPeople[i]->CD4_cat]){
+                    if (ARTbuffer*ARTWomen[ART_index][MyArrayOfPointersToPeople[i]->CD4_cat] > count_ARTAdult_Women[MyArrayOfPointersToPeople[i]->CD4_cat]){
                         
                         
                         MyArrayOfPointersToPeople[i]->ART=*p_GT;            // Lets set ART date
@@ -330,7 +332,7 @@ void EventARTCatSwitch(person *MyPointerToPerson){
             
             if (MyPointerToPerson->Sex==1){
                 count_ARTMen_sum++;                                             // Lets add a count to the adult category
-                count_ARTAdult_Men[4]++;                                        // Lets update the ART CD4 array counter
+                count_ARTMen[4]++;                                        // Lets update the ART CD4 array counter
             }
             
             if (MyPointerToPerson->Sex==2){
@@ -383,7 +385,7 @@ void EventMyDeathDate(person *MyPointerToPerson){
             
             // If it is a man
             if (MyPointerToPerson->Sex==1 && MyPointerToPerson->Age>=ageAdult){
-                count_ARTAdult_Men[MyPointerToPerson->CD4_cat_start]=count_ARTAdult_Men[MyPointerToPerson->CD4_cat_start]-1;
+                count_ARTMen[MyPointerToPerson->CD4_cat_start]=count_ARTMen[MyPointerToPerson->CD4_cat_start]-1;
                 count_ARTMen_sum=count_ARTMen_sum-1;
             }
             

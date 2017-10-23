@@ -28,6 +28,8 @@ void loadCD4DeathArray();
 void loadCD4ARTArray();
 
 void loadARTKidsArray();
+void loadARTMenArray();
+void loadARTWomenArray();
 
 void loadNrChildren();
 void loadNrChildrenProb();

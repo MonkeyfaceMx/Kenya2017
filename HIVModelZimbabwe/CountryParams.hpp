@@ -11,8 +11,8 @@
 
 #include <stdio.h>
 
-void selectCountry(int x);
-void selectKenya();
-void selectZimbabwe();
+void loadCountryParams(int x);
+// void selectKenya();
+// void selectZimbabwe();
 
 #endif 

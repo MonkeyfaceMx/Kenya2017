@@ -34,7 +34,12 @@ double*** CD4_startarray;
 double**  CD4_prog_rates;
 double*** Death_CD4_rates;
 double*** ART_CD4_rates;
+
+// Country-specific ART arrays
 int* ARTKids;
+int** ARTMen;
+int** ARTWomen;
+
 
 // Demographic Arrays
 double**  NrChildrenArray;
@@ -246,6 +251,92 @@ void loadCD4DeathArray()
     E(cout<< "The CD4_death_rates Parameter has been loaded" << endl;)
 }
 
+void loadARTMenArray()
+{
+    E(cout<< "The ART adult men array is being loaded" << endl;)
+    
+    CParamReader myReader;
+    string fileName = ParamDirectory + "LoadParam.txt";
+    if(! myReader.setNewFileName(fileName))
+    {
+        cout << "File " << fileName << " does not exist." << endl;
+        exit(0);
+    }
+    E(cout << "File " << fileName << " succressfully added." << endl;)
+    
+    char ParamName[] = "ARTAdult_Men";
+    int length;
+    int nr_rows;
+    int nr_columns;
+    stringstream ss;
+    vector<double> data;
+    
+    char* myValue = myReader.getParamString(ParamName, length, nr_rows, nr_columns);
+    // cout << endl << endl << "FINAL!!!: " << endl << ParamName << " = " << endl <<  " " << myValue << endl << "length = " << length << " nr_columns: " << nr_columns << " nr_rows: " << nr_rows << endl;
+    
+    ss << myValue;
+    double a;
+    while (ss >> a){data.push_back(a);}
+    
+    int row=nr_rows;
+    int col=nr_columns;
+    
+    ARTMen = new int *[row];
+    for (int i=0; i<row; i++)
+    {
+        ARTMen[i] = new int [col];
+    }
+    for (int j=0; j<row; j++){
+        for (int i=0; i<col; i++){
+            int NElement=i+(j*col);
+            ARTMen[j][i]=data[NElement];
+        }}
+    
+}
+
+void loadARTWomenArray()
+{
+    E(cout<< "The ART adult women array is being loaded" << endl;)
+    
+    CParamReader myReader;
+    string fileName = ParamDirectory + "LoadParam.txt";
+    if(! myReader.setNewFileName(fileName))
+    {
+        cout << "File " << fileName << " does not exist." << endl;
+        exit(0);
+    }
+    E(cout << "File " << fileName << " succressfully added." << endl;)
+    
+    char ParamName[] = "ARTAdult_Women";
+    int length;
+    int nr_rows;
+    int nr_columns;
+    stringstream ss;
+    vector<double> data;
+    
+    char* myValue = myReader.getParamString(ParamName, length, nr_rows, nr_columns);
+    // cout << endl << endl << "FINAL!!!: " << endl << ParamName << " = " << endl <<  " " << myValue << endl << "length = " << length << " nr_columns: " << nr_columns << " nr_rows: " << nr_rows << endl;
+    
+    ss << myValue;
+    double a;
+    while (ss >> a){data.push_back(a);}
+    
+    int row=nr_rows;
+    int col=nr_columns;
+    
+    ARTWomen = new int *[row];
+    for (int i=0; i<row; i++)
+    {
+        ARTWomen[i] = new int [col];
+    }
+    for (int j=0; j<row; j++){
+        for (int i=0; i<col; i++){
+            int NElement=i+(j*col);
+            ARTWomen[j][i]=data[NElement];
+        }}
+    
+}
+
 void loadARTKidsArray()
 {
     E(cout<< "The ARTKids Parameter is being loaded" << endl;)
@@ -279,7 +370,7 @@ void loadARTKidsArray()
     int col=nr_columns;
     
     // Make the *** Array
-    ARTKids= new int [col];
+    ARTKids = new int [col];
     
     for (int i=0; i<col; i++){
         ARTKids[i]=data[i];
