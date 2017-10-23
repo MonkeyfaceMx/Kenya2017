@@ -43,7 +43,7 @@ extern double OtherCan_d;
 
 /////////////////// FUNCTION: IF LOOP FOR COUNTRY-SPECIFIC PARAMETERS //////////////////////
 void loadCountryParams(int x){
-    if (x == 1){
+    if (x == 1){                                        // KENYA
         cout << "You have selected Kenya" << endl;
         UN_Pop=5909800;
         init_pop=UN_Pop/factor;
@@ -69,7 +69,7 @@ void loadCountryParams(int x){
         OtherCan_d   =0.71;
     }
     
- else if (x == 2){
+ else if (x == 2){                                          // ZIMBABWE
      cout << "You have selected Zimbabwe" << endl;
      UN_Pop=2565000;
      init_pop=UN_Pop/factor;
