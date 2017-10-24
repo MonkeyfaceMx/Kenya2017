@@ -35,10 +35,10 @@ using namespace std;
 int country=1;
 
 // STEP 2 --- DEFINE THE WORKING DIRECTORY
-string ParamDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/Model_Africa/HIVModelZimbabwe/";
+string ParamDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/Model_Africa/HIVModelZimbabwe/";      // Add loop to make the file selection dynamic 
 
 // STEP 3 --- DEFINE THE DIRECTORY AND NAME FOR THE OUTPUT FILE
-string OutputFileDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Monkey19.csv";
+string OutputFileDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Latest.csv";
 
                             /// STEP 4 --- AT WHAT FACTOR SHOULD WE RUN THE POPULATION?
 int factor=100;
@@ -144,6 +144,8 @@ int main(){
     loadARTKidsArray();
     loadARTWomenArray();
     loadARTMenArray();
+    loadARTMen_sumArray();
+    loadARTWomen_sumArray();
     
     // Load Demographic Arrays
     loadAgeDistribution();
@@ -268,7 +270,7 @@ int main(){
                 MyArrayOfPointersToPeople[i]->Oeso,
                 MyArrayOfPointersToPeople[i]->Prostate,
                 MyArrayOfPointersToPeople[i]->OtherCan,
-                MyArrayOfPointersToPeople[i]->Stroke_status
+                MyArrayOfPointersToPeople[i]->Stroke_status             // Check if used and, if not, remove
                 
                 );}
     fclose(ProjectZim);

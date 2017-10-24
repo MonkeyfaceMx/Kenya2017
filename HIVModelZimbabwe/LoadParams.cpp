@@ -39,6 +39,8 @@ double*** ART_CD4_rates;
 int* ARTKids;
 int** ARTMen;
 int** ARTWomen;
+int* ARTMen_sum;
+int* ARTWomen_sum;
 
 
 // Demographic Arrays
@@ -345,7 +347,7 @@ void loadARTKidsArray()
     string fileName = ParamDirectory + "LoadParam.txt";
     if(! myReader.setNewFileName(fileName))
     {
-        cout << "File " << fileName << "doesn't exist." << endl;
+        cout << "File " << fileName << "does not exist." << endl;
         exit(0);
     }
     E(cout << "File " << fileName << " successfully added." << endl;)
@@ -380,6 +382,76 @@ void loadARTKidsArray()
     E(cout<< "The ARTKids Parameter has been loaded" << endl;)    
 }
 
+
+void loadARTMen_sumArray()
+{
+    E(cout<< "The ARTMen_sum array is being loaded" << endl;)
+    
+    CParamReader myReader;
+    string fileName = ParamDirectory + "LoadParam.txt";
+    if(! myReader.setNewFileName(fileName))
+    {
+        cout << "File " << fileName << " does not exist." << endl;
+        exit(0);
+    }
+    E(cout << "File " << fileName << " successfully added." << endl;)
+    
+    char ParamName[] = "ARTMen_sum";
+    int length;
+    int nr_rows;
+    int nr_columns;
+    stringstream ss;
+    vector<double> data;
+    
+    char* myValue = myReader.getParamString(ParamName, length, nr_rows, nr_columns);
+    
+    ss << myValue;
+    double a;
+    while (ss >> a){data.push_back(a);}
+    int col=nr_columns;
+    ARTMen_sum = new int [col];
+    for (int i=0; i<col; i++){
+        ARTMen_sum[i]=data[i];
+        //cout << "I: " << i << " I: " << i << endl;
+        //cout << "ARTMen_sum " << ARTMen_sum[i] << endl;
+    }
+    E(cout << "The ARTMen_sum array has been loaded" << endl;)
+}
+
+void loadARTWomen_sumArray()
+{
+    E(cout<< "The ARTWomen_sum array is being loaded" << endl;)
+    
+    CParamReader myReader;
+    string fileName = ParamDirectory + "LoadParam.txt";
+    if(! myReader.setNewFileName(fileName))
+    {
+        cout << "File " << fileName << " does not exist." << endl;
+        exit(0);
+    }
+    E(cout << "File " << fileName << " successfully added." << endl;)
+    
+    char ParamName[] = "ARTWomen_sum";
+    int length;
+    int nr_rows;
+    int nr_columns;
+    stringstream ss;
+    vector<double> data;
+    
+    char* myValue = myReader.getParamString(ParamName, length, nr_rows, nr_columns);
+    
+    ss << myValue;
+    double a;
+    while (ss >> a){data.push_back(a);}
+    int col=nr_columns;
+    ARTWomen_sum = new int [col];
+    for (int i=0; i<col; i++){
+        ARTWomen_sum[i]=data[i];
+        //cout << "I: " << i << " I: " << i << endl;
+        //cout << "ARTWomen_sum " << ARTWomen_sum[i] << endl;
+    }
+    E(cout << "The ARTWomen_sum array has been loaded" << endl;)
+}
 
 void loadCD4ARTArray()
 {

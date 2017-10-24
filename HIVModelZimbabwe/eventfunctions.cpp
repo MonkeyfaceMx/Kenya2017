@@ -33,6 +33,7 @@ extern person** MyArrayOfPointersToPeople;
 extern int *p_PY;
 extern vector<event*> Events;
 extern int ART_start_yr;
+extern int country;
 
 extern double*** CD4_startarray;
 extern double**  CD4_prog_rates;
@@ -40,7 +41,9 @@ extern double*** Death_CD4_rates;
 extern double*** ART_CD4_rates;
 extern int* ARTKids;
 extern int** ARTMen;
+extern int* ARTMen_sum;
 extern int** ARTWomen;
+extern int* ARTWomen_sum;
 
 extern double**  NCDArray;
 extern int*      NCDAgeArrayMin;
@@ -88,25 +91,6 @@ extern int ageAdult;
 extern double ARTbuffer;
 
 
-// Note:
-// 0. Hypertension
-// 1. Depression
-// 2. Asthma
-// 3. Stroke
-// 4. Diabetes
-// 5. CKD
-
-
-// 0. Colo
-// 1. Liver
-// 2. Oeseo
-// 3. Other
-// 4. Breast
-// 5. Cervical
-// 6. Prostate
-
-
-
 //// Tidy up
 double Risk_NCD_Diabetes[3]={Risk_DiabHT, Risk_DiabCVD, Risk_DiabCKD};
 int relatedNCDs_Diab[3]={0, 3, 5};
@@ -118,45 +102,15 @@ int relatedNCDs_HT[2]={3, 5};
 int nr_NCD_HT=sizeof(relatedNCDs_HT)/sizeof(relatedNCDs_HT[0]);
 
 
-//// --- ART Array Parameter --- ////
-/*int ARTAdult_Men[13][7]={           // ART by CD4 count from 2004 to 2015; last line is repeated
-        {0,     0,     0,     14,     18,     11,     11},
-        {0,     0,     0,     47,     60,     35,     32},
-        {0,     0,     0,     107,    134,    77,     67},
-        {0,     0,     0,     187,    226,    124,    98},
-        {0,     0,     0,     272,    315,    166,    124},
-        {0,     0,     0,     401,    436,    215,    147},
-        {6,     6,     157,   476,    508,    242,    159},
-        {12,    13,    281,   542,    571,    265,    170},
-        {12,    16,    291,   540,    567,    260,    166},
-        {14,    22,    320,   550,    578,    264,    169},
-        {30,    73,    350,   564,    599,    276,    180},
-        {67,    177,   419,   609,    664,    312,    204},
-        {67,    177,   419,   609,    664,    312,    204},};
-*/
-/*int ARTAdult_Women[13][7]={
-        {0,     0,     0,     18,     23,     14,     14},
-        {0,     0,     0,     59,     75,     44,     42},
-        {0,     0,     0,     134,    168,    98,     89},
-        {0,     0,     0,     230,    283,    159,    136},
-        {0,     0,     0,     329,    394,    217,    176},
-        {0,     0,     0,     471,    547,    290,    222},
-        {7,     7,     177,   566,    657,    343,    251},
-        {19,    20,    440,   723,    834,    421,    287},
-        {36,    40,    734,   882,    977,    463,    298},
-        {50,    58,    920,   960,    1036,   480,    304},
-        {144,   294,   1034,  1022,   1098,   501,    311},
-        {287,   575,   1197,  1116,   1173,   520,    316},
-        {287,   575,   1197,  1116,   1173,   520,    316},};
-*/
 
 // Parameters sums (sums of above arrays (across CD4 count - total for year)
-int ARTMen_sum[13] =  {55, 174, 384, 635, 877, 1200, 1554, 1852, 1852, 1916, 2072, 2451, 2451};
-int ARTWomen_sum[13]= {70, 221, 489, 808, 1116, 1530, 2007, 2743, 3429, 3808, 4405, 5183, 5183};
+//int ARTMen_sum[13] =  {55, 174, 384, 635, 877, 1200, 1554, 1852, 1852, 1916, 2072, 2451, 2451};
+//int ARTWomen_sum[13]= {70, 221, 489, 808, 1116, 1530, 2007, 2743, 3429, 3808, 4405, 5183, 5183};
 
 
 
 // Count to compare to sum and CD4-specific numbers
+//void loadCountryParams(country); 
 int count_ARTMen[7]={0, 0, 0, 0, 0, 0, 0};        // Count by CD4 count category
 int count_ARTAdult_Women[7]={0, 0, 0, 0, 0, 0, 0};      // Count by CD4 count category
 int count_ARTMen_sum=0;                                 // Count the sum for the year - men

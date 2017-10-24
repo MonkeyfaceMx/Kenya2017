@@ -30,6 +30,8 @@ void loadCD4ARTArray();
 void loadARTKidsArray();
 void loadARTMenArray();
 void loadARTWomenArray();
+void loadARTMen_sumArray();
+void loadARTWomen_sumArray();
 
 void loadNrChildren();
 void loadNrChildrenProb();
