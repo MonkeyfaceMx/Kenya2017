@@ -110,7 +110,6 @@ int nr_NCD_HT=sizeof(relatedNCDs_HT)/sizeof(relatedNCDs_HT[0]);
 
 
 // Count to compare to sum and CD4-specific numbers
-//void loadCountryParams(country); 
 int count_ARTMen[7]={0, 0, 0, 0, 0, 0, 0};        // Count by CD4 count category
 int count_ARTAdult_Women[7]={0, 0, 0, 0, 0, 0, 0};      // Count by CD4 count category
 int count_ARTMen_sum=0;                                 // Count the sum for the year - men

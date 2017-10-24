@@ -34,21 +34,19 @@ using namespace std;
 // 1=KENYA      2=ZIMBABWE      3=MALAWI
 int country=1;
 
-// STEP 2 --- DEFINE THE WORKING DIRECTORY
-string ParamDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/Model_Africa/HIVModelZimbabwe/";      // Add loop to make the file selection dynamic 
-
-// STEP 3 --- DEFINE THE DIRECTORY AND NAME FOR THE OUTPUT FILE
+// STEP 2 --- NAME THE DIRECTORY AND TAG FOR THE OUTPUT FILE
 string OutputFileDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/MATLAB_Pablo copy/MATLAB copy/Latest.csv";
 
-                            /// STEP 4 --- AT WHAT FACTOR SHOULD WE RUN THE POPULATION?
+/// STEP 3 --- AT WHAT FACTOR SHOULD WE RUN THE POPULATION?
 int factor=100;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////                                   MODIFY IF NEEDED PARAMETERS                                         //////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-double StartYear=1950;
-int EndYear=2035;
-const long long int final_number_people=100000000;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////                                   MODIFY IF NEEDED PARAMETERS                                        //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+double StartYear=1950;                                                                                          //////////
+int EndYear=2035;                                                                                               //////////
+const long long int final_number_people=100000000;                                                              //////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -88,6 +86,7 @@ double      Prostate_d;                                                         
 double      OtherCan_d;                                                                                         //////////
 extern double MortRisk[6];              // Adjust in eventsfunctions.cpp                                        //////////
 extern double MortRisk_Cancer[5];       // Adjust in eventsfunctions.cpp                                        //////////
+string ParamDirectory;                                                                                          //////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////                                  POINTER TO EVENT QUEUE                                              //////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,6 +121,9 @@ int main(){
     
     
     cout << endl << "Jambo / Hello / Hola!" << endl << endl ;								  // Check if model is running
+    
+    getParamsString(country); // Gets the ParamDirectory string to pull country-specific files
+    cout << "Country files are being accessed..." << endl << endl;
     
     // Call the function that loads country-specific parameters
     loadCountryParams(country);

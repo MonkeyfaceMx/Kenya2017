@@ -40,6 +40,7 @@ extern double Liver_d;
 extern double Oeso_d;
 extern double Prostate_d;
 extern double OtherCan_d;
+extern string ParamDirectory;
 
 /////////////////// FUNCTION: IF LOOP FOR COUNTRY-SPECIFIC PARAMETERS //////////////////////
 void loadCountryParams(int x){
@@ -99,3 +100,12 @@ void loadCountryParams(int x){
 }
 
 
+void getParamsString(int x){
+    if (x == 1){
+        ParamDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/Model_Africa/HIVModelZimbabwe/";
+    }
+    
+    else if (x == 2){
+        ParamDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/Model_Africa/Zimbabwe/";
+    }
+}
